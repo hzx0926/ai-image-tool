@@ -1,22 +1,81 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>AI Image Repair Tool</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI P圖與圖片修復</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="tool-panel" aria-label="圖片工具">
+        <div class="brand-row">
+          <div class="brand-mark" aria-hidden="true">AI</div>
+          <div>
+            <h1>AI P圖</h1>
+            <p>圖片修復工作台</p>
+          </div>
+        </div>
 
-  <div class="container">
-    <h1>AI Image Repair Tool</h1>
+        <label class="upload-box" for="imageInput">
+          <span class="upload-icon" aria-hidden="true">+</span>
+          <span>選擇圖片</span>
+          <input id="imageInput" type="file" accept="image/*" />
+        </label>
 
-    <input type="file" id="upload">
+        <div class="control-group">
+          <span class="control-title">模式</span>
+          <div class="segmented" role="group" aria-label="模式">
+            <button class="segment is-active" type="button" data-mode="restore">修復</button>
+            <button class="segment" type="button" data-mode="retouch">P圖</button>
+            <button class="segment" type="button" data-mode="color">上色</button>
+          </div>
+        </div>
 
-    <button onclick="uploadImage()">Start Repair</button>
+        <div class="control-group">
+          <label for="strength">強度 <output id="strengthValue">68</output></label>
+          <input id="strength" type="range" min="0" max="100" value="68" />
+        </div>
 
-    <p>Result:</p>
-    <img id="result" />
-  </div>
+        <div class="control-grid">
+          <label class="toggle">
+            <input id="faceLight" type="checkbox" checked />
+            <span>補光</span>
+          </label>
+          <label class="toggle">
+            <input id="detailBoost" type="checkbox" checked />
+            <span>細節</span>
+          </label>
+        </div>
 
-  <script src="app.js"></script>
-</body>
+        <button id="processButton" class="primary-button" type="button">開始處理</button>
+        <button id="downloadButton" class="secondary-button" type="button" disabled>下載結果</button>
+      </aside>
+
+      <section class="workspace" aria-label="圖片預覽">
+        <header class="workspace-header">
+          <div>
+            <h2 id="modeTitle">圖片修復</h2>
+            <p id="modeSubtitle">去霧、提亮、銳化、降低老照片灰感</p>
+          </div>
+          <div class="status-pill" id="statusPill">已準備</div>
+        </header>
+
+        <div class="compare-frame">
+          <canvas id="beforeCanvas" aria-label="原圖"></canvas>
+          <canvas id="afterCanvas" aria-label="處理後圖片"></canvas>
+          <div class="split-line" id="splitLine" aria-hidden="true"></div>
+          <input id="compareSlider" class="compare-slider" type="range" min="0" max="100" value="50" aria-label="比較原圖與處理後" />
+        </div>
+
+        <footer class="workspace-footer">
+          <span>左側原圖</span>
+          <span>拖動中線比較</span>
+          <span>右側處理後</span>
+        </footer>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
 </html>
